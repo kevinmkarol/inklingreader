@@ -1,0 +1,46 @@
+Step 1: Update apt-get and/or homebrew
+
+Step 2: Install the following dependencies
+
+sudo apt-get update
+
+List of Commands to install dependencies on Linux: (some of these may already be installed on your system)
+sudo apt-get install automake //installs automake
+sudo apt-get install autoconf //installs autoconf
+sudo apt-get install build-essential //installs make
+sudo apt-get install libgtk-3-dev //installs GTK+
+sudo apt-get install librsvg2-dev //installs librsvg-2.0
+sudo apt-get install libusb-1.0-0-dev //installs libusb
+
+
+On Mac via Homebrew:
+brew install automake
+brew install autoconf
+brew install gtk+3
+brew install librsvg
+brew install libusb
+brew install libtool
+
+Step 3: Clone the repository using:
+git clone https://github.com/kevinmkarol/inklingreader.git
+
+Step 4: Update submodules
+git submodule init
+git submodule update
+
+
+Step 5 (Mac only): navigate to hidapi (src/libraries/hidapi) and run:
+./bootstrap
+./configure
+make
+make install
+
+
+Step 6: At the top level of the repository run:
+  autoreconf -i  (this will take a minute)
+  ./configure (if you're missing a dependency this phase will fail)
+  make
+
+Step 7: Plug in the inkling, and run:
+  ./inklingreader -n ipAddress:port
+

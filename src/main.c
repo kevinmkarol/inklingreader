@@ -39,6 +39,7 @@
 #include <getopt.h>
 #include <glib.h>
 
+#include "constants.h"
 #include "parsers/wpi.h"
 #include "datatypes/configuration.h"
 #include "gui/mainwindow.h"
@@ -46,6 +47,8 @@
 #include "converters/svg.h"
 #include "optimizers/point-reduction.h"
 #include "usb/online-mode.h"
+
+
 
 /* This struct stores various run-time configuration options to allow 
  * customization of the behavior of the program. */
@@ -95,6 +98,7 @@ show_help ()
 	"  --gui,               -g  Start the graphical user interface.\n"
 	"  --online-mode        -j  Use the online mode.\n"
 	"  --version,           -v  Show versioning information.\n"
+    "  --network            -n  Send the data via OSC, rather than as mouse\n"
 	"  --help,              -h  Show this message.\n\n");
 }
 
@@ -156,6 +160,7 @@ main (int argc, char** argv)
 	  { "direct-output",     no_argument,       0, 'i' },
 	  { "online-mode",       no_argument,       0, 'j' },
 	  { "merge",             required_argument, 0, 'm' },
+      { "network",           required_argument, 0, 'n' },
 	  { "orientation",       required_argument, 0, 'o' },
 	  { "pressure-factor",   required_argument, 0, 'p' },
 	  { "to",                required_argument, 0, 't' },
@@ -166,7 +171,7 @@ main (int argc, char** argv)
       while ( arg != -1 )
 	{
 	  /* Make sure to list all short options in the string below. */
-	  arg = getopt_long (argc, argv, "a:b:c:d:s:f:m:p:t:g:jvh", options, &index);
+	  arg = getopt_long (argc, argv, "a:b:c:d:s:f:m:n:p:t:g:jvh", options, &index);
 
 	  switch (arg)
 	    {
@@ -342,6 +347,26 @@ main (int argc, char** argv)
 	      usb_online_mode_exit ();
 	      launch_gui = 0;
 	      break;
+        /*--------------------------------------------------------------.
+         | OPTION: Network mode                                         |
+         | Send incoming pen data as OSC                                |
+        '--------------------------------------------------------------*/
+          
+        case 'n':
+          if(optarg){
+            char* ipAddress;
+            int port;
+            char* delim = ":";
+            char* token;
+
+            ipAddress = strtok(optarg, delim);
+            port = atoi(strtok(NULL, delim));
+            
+            usb_network_mode_init(ipAddress, port);
+            usb_network_mode_exit();
+            launch_gui = 0;
+          }
+          break;
 
 	      /*--------------------------------------------------------------.
 	       | OPTION: HELP                                                 |

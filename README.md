@@ -1,3 +1,22 @@
+Inkling OSC for Mac
+=================
+This fork of roelj/inklingreader extends the online_mode functionality to broadcast the inkling data over a network via OSC.  This new network broadcast mode has been tested for both Raspberry Pi and Mac.  This will allow other programms to recieve Inkling data in real time and it used however they wish.
+
+Network mode can be invoked using:<br>
+./inklingreader -n ipAddress:port<br>
+where ipAddress is a full ipAddress (127.0.0.1 for localhost) and port is the port number the OSC reveiver will be listening on.
+
+Additionally, to facilitate less technical users a file called BEGINNER\_SETUP\_GUIDE.txt has been added which lists what I believe are currently all of the dependencies for the project (as of 2/14/16).  While this will not be updated, it should get users reasonably close to getting the project up and running
+
+-Kevin M. Karol
+
+This project also relies on these wonderfull OSC and USB HID libraries:<br>
+https://github.com/mhroth/tinyosc.git<br>
+https://github.com/signal11/hidapi.git
+
+
+(Documentation for roelj/inklingreader begins here)
+
 GNU InklingReader
 =================
 

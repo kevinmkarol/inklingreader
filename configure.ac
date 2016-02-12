@@ -11,6 +11,7 @@ AM_SILENT_RULES([yes])
 AC_CONFIG_SRCDIR([src/main.c])
 
 AC_PROG_CC
+AC_PROG_CXX
 AM_PROG_CC_C_O
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h stdio.h])
@@ -19,18 +20,22 @@ AC_CONFIG_FILES([Makefile])
 case $host in
 *-linux*)
 AC_SUBST(OS_LINUX)
+AM_CONDITIONAL([OS_DARWIN], [false])
 AM_CONDITIONAL([OS_LINUX], [true])
 ;;
 *-mingw*)
 AC_SUBST(OS_LINUX)
+AM_CONDITIONAL([OS_DARWIN], [false])
 AM_CONDITIONAL([OS_LINUX], [false])
 ;;
 *-cygwin*)
 AC_SUBST(OS_LINUX)
+AM_CONDITIONAL([OS_DARWIN], [false])
 AM_CONDITIONAL([OS_LINUX], [true])
 ;;
 *-darwin*)
 AC_SUBST(OS_LINUX)
+AM_CONDITIONAL([OS_DARWIN], [true])
 AM_CONDITIONAL([OS_LINUX], [true])
 ;;
 *)
